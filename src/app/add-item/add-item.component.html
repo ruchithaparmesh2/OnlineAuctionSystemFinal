@@ -1,0 +1,100 @@
+<app-navbar></app-navbar>
+<div class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
+  style="background-image: url('https://wallpapercave.com/wp/wp9863784.jpg');">
+
+  <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
+
+  <div class="relative z-10 bg-white p-6 rounded-2xl shadow-xl max-w-6xl w-full backdrop-blur-lg bg-opacity-40">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Title Column -->
+      <div class="md:col-span-3 text-center">
+        <h1 class="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
+          Add an Item to Auctions – Get the Best Price for Your Item!
+        </h1>
+      </div>
+
+      <!-- Left Column -->
+      <div class="space-y-4">
+        <div>
+          <label for="userName" class="block text-white text-sm font-medium">User Name</label>
+          <input type="text" id="userName"
+            [(ngModel)]="auction.userName" name="userName"
+            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+            placeholder="Enter user name" required>
+        </div>
+        <div>
+          <label for="category" class="block text-white text-sm font-medium">Category</label>
+          <select id="category" [(ngModel)]="auction.category" name="category"
+            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+            required>
+            <option value="" disabled selected>Select category</option>
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
+            <option value="home-appliances">Home Appliances</option>
+            <option value="books">Books</option>
+            <option value="furniture">Furniture</option>
+          </select>
+        </div>
+        <div>
+          <label for="itemName" class="block text-white text-sm font-medium">Item Name</label>
+          <input type="text" id="itemName" [(ngModel)]="auction.itemName" name="itemName"
+            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+            placeholder="Enter item name" required>
+        </div>
+      </div>
+
+      <!-- Middle Column -->
+      <div class="space-y-4">
+        <div>
+          <label for="startingPrice" class="block text-white text-sm font-medium">Starting Auction Price</label>
+          <input type="number" id="startingPrice" [(ngModel)]="auction.startingPrice" name="startingPrice"
+            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+            placeholder="Enter starting price" required>
+        </div>
+        <div>
+          <label for="auctionStartDate" class="block text-white text-sm font-medium">Auction Start Date</label>
+          <input type="date" id="auctionStartDate" [(ngModel)]="auction.auctionDate" name="auctionDate"
+            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+            required>
+        </div>
+        <div>
+          <label for="auctionStartTime" class="block text-white text-sm font-medium">Auction Start Time</label>
+          <input type="time" id="auctionStartTime" [(ngModel)]="auction.auctionStartTime" name="auctionStartTime"
+            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+            required>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="space-y-4">
+        <div>
+          <label for="auctionEndDate" class="block text-white text-sm font-medium">Auction End Date</label>
+          <input type="date" id="auctionEndDate" [(ngModel)]="auction.auctionEndDate" name="auctionEndDate"
+            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+            required>
+        </div>
+        <div>
+          <label for="auctionEndTime" class="block text-white text-sm font-medium">Auction End Time</label>
+          <input type="time" id="auctionEndTime" [(ngModel)]="auction.auctionEndTime" name="auctionEndTime"
+            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+            required>
+        </div>
+        <div>
+          <label for="fileInput" class="block text-white text-sm font-medium">Upload Item Image</label>
+          <input type="file" id="fileInput" (change)="onFileChange($event)"
+            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400">
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 text-center">
+      <!-- Add #auctionForm="ngForm" to reference the form for resetting -->
+      <form #auctionForm="ngForm" (ngSubmit)="onSubmit(auctionForm)">
+        <button type="submit"
+          class="w-full md:w-auto px-4 py-2 bg-gradient-to-r from-indigo-500 to-blue-500 text-white text-sm font-semibold rounded-lg hover:from-indigo-600 hover:to-blue-600 transition duration-300">
+          Submit Auction Item
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

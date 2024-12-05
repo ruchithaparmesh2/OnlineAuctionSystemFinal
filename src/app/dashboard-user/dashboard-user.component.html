@@ -1,0 +1,87 @@
+<div class="bg-cover bg-center relative min-h-screen" style="background-image: url('https://wallpapercave.com/wp/wp9863784.jpg');">
+  <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-60"></div>
+
+  <div class="bg-gray-900 text-white shadow-md relative z-10 bg-opacity-40 backdrop-blur-md">
+      <div class="flex items-center justify-between px-6 py-4">
+          <!-- Logo and Title -->
+          <div class="flex items-center space-x-2">
+              <img src="https://cdn2.iconfinder.com/data/icons/nft-soft-fill/60/Auction-Bidding-bid-bidder-hand-1024.png" alt="BidBuddy Logo" class="w-8 h-8">
+              <span class="font-semibold text-xl">Bidding-Buddy</span>
+          </div>
+          <div class="flex space-x-6">
+              <a href="#" class="hover:text-blue-500">All Auctions</a>
+              <a href="/add-item" class="hover:text-blue-500">Create Auction</a>
+              <a href="#" class="hover:text-blue-500">My Bids</a>
+          </div>
+
+          <!-- User Info, Notifications, and Sign Out -->
+          <div class="flex items-center space-x-6">
+              <!-- Bell Icon with Notification Badge -->
+              <button class="relative">
+                  <i class="fas fa-bell text-blue-500 text-xl"></i>
+                  <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">3</span>
+              </button>
+
+              <!-- User Details -->
+              <div class="flex items-center space-x-2 bg-gray-800 bg-opacity-30 px-4 py-2 rounded-lg shadow-lg transform transition hover:scale-105 hover:shadow-2xl">
+                  <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User Profile" class="w-10 h-10 rounded-full border-2 border-blue-500">
+                  <div>
+                      <p class="font-semibold">{{ user?.name }}</p>
+                      <p class="text-sm text-gray-400">{{ user?.email }}</p>
+                  </div>
+              </div>
+
+              <a href="/" class="bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-lg text-white hover:bg-gradient-to-l transition">
+                  Sign Out
+              </a>
+          </div>
+      </div>
+  </div>
+
+  <!-- User Dashboard Cards Section -->
+  <div class="container mx-auto px-8 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Active Auctions Card -->
+          <div class="bg-gray-800 backdrop-blur-md bg-opacity-40 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105">
+              <h2 class="text-xl font-bold">Active Auctions</h2>
+              <p class="mt-4">Explore and bid on ongoing auctions.</p>
+              <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">View Auctions</button>
+          </div>
+
+          <!-- My Bids Card -->
+          <div class="bg-gray-800 backdrop-blur-md bg-opacity-40 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105">
+              <h2 class="text-xl font-bold">My Bids</h2>
+              <p class="mt-4">Review and manage your active bids.</p>
+              <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">View Bids</button>
+          </div>
+
+          <!-- Won Auctions Card -->
+          <div class="bg-gray-800 backdrop-blur-md bg-opacity-40 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105">
+              <h2 class="text-xl font-bold">Won Auctions</h2>
+              <p class="mt-4">Check the auctions you've won and complete payments.</p>
+              <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">View Won Items</button>
+          </div>
+
+          <!-- Create Auction Card -->
+          <div class="bg-gray-800 backdrop-blur-md bg-opacity-40 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105">
+              <h2 class="text-xl font-bold">Create Auction</h2>
+              <p class="mt-4">Start a new auction by listing your items here.</p>
+              <a href="/add-item" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">Create Auction</a>
+          </div>
+
+          <!-- Check Latest Updates Card -->
+          <div class="bg-gray-800 backdrop-blur-md bg-opacity-40 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105">
+            <h2 class="text-xl font-bold">Check Latest Updates</h2>
+            <p class="mt-4">Stay updated with the latest news and system updates.</p>
+            <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">View Updates</button>
+          </div>
+
+          <!-- Help & Support Card -->
+          <div class="bg-gray-800 backdrop-blur-md bg-opacity-40 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105">
+            <h2 class="text-xl font-bold">Help & Support</h2>
+            <p class="mt-4">Need assistance? Find answers or contact support.</p>
+            <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">Get Help</button>
+          </div>
+      </div>
+  </div>
+</div>
