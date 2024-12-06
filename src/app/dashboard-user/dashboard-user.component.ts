@@ -4,11 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from '../user.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-dashboard-user',
   standalone: true,
-  imports: [],
+  imports: [NavbarComponent],
   templateUrl: './dashboard-user.component.html',
   styleUrl: './dashboard-user.component.css'
 })

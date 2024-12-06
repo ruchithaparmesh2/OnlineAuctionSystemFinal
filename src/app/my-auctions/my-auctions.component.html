@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+<div class="p-4">
+    <input [(ngModel)]="username" type="text" placeholder="Enter username without space" class="p-2 w-full border border-gray-300 rounded">
+    <button (click)="fetchAuctions()" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
+      Fetch Auctions
+    </button>
+  </div>
+  
+  <div *ngIf="auctions.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let auction of auctions" class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <img [src]="auction.imageUrl" alt="Item image" class="w-60 h-64 object-cover">
+  
+      <div class="p-4">
+        <h2 class="text-xl font-bold">{{ auction.itemName }}</h2>
+        <p class="text-sm text-gray-500">{{ auction.category }}</p>
+        <p class="mt-2 text-lg font-semibold">Starting Price: ₹{{ auction.startingPrice }}</p>
+        <p class="mt-2 text-sm text-gray-500">Auction ends in:</p>
+        <p class="text-xl text-red-500 font-bold">
+          {{ auction.remainingTime || getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime) }}
+        </p>
+  
+        <button 
+          class="mt-2 px-4 py-2 bg-green-500 text-white rounded" 
+          (click)="checkBidsForItem(auction.itemName, getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime) === 'Item Sold')">
+          Check Bids
+        </button>
+  
+        <div *ngIf="bidDetails[auction.itemName]" class="mt-4 bg-gray-100 p-4 rounded">
+          <div *ngFor="let bid of bidDetails[auction.itemName]">
+            <p *ngIf="bid.message" class="text-red-500">{{ bid.message }}</p>
+            <p *ngIf="!bid.message">Auction ID: {{ bid.auctionId }}, Bidder: {{ bid.userName }}, Amount: ₹{{ bid.bidAmount || bid.highestBidAmount }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

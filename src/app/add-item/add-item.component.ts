@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+
+import { NotificationService } from '../notification.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
@@ -21,35 +23,39 @@ export class AddItemComponent {
     auctionStartTime: '',
     auctionEndDate: '',
     auctionEndTime: '',
-    imageUrl: ''
+    imageUrl: '',
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private notificationService: NotificationService
+  ) {}
 
-  // Handle file change event
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
-      this.auction.imageUrl = file.name; // Store the file name or upload the file
+      this.auction.imageUrl = file.name;
     }
   }
 
-  // Handle form submission
   onSubmit(form: NgForm) {
     const auctionData = {
       ...this.auction,
-      startingPrice: parseFloat(this.auction.startingPrice.toString())
+      startingPrice: parseFloat(this.auction.startingPrice.toString()),
     };
 
-    this.http.post('http://localhost:8080/api/auctions/add', auctionData)
-      .subscribe(response => {
+    this.http.post('http://localhost:8080/api/auctions/add', auctionData).subscribe(
+      response => {
         console.log('Auction saved:', response);
-
-        // Reset the form after submission
+        this.notificationService.addNotification(
+          `New item "${this.auction.itemName}" added at ${new Date().toLocaleTimeString()}`
+        );
         form.reset();
-        this.auction.imageUrl = ''; // Optionally reset image URL as well
-      }, error => {
+        this.auction.imageUrl = '';
+      },
+      error => {
         console.error('Error saving auction:', error);
-      });
+      }
+    );
   }
 }

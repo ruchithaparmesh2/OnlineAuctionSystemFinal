@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+<div class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative pt-6"
+  style="background-image: url('https://wallpapercave.com/wp/wp9863784.jpg');">
+  <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
+
+
+
+  <div class="relative z-10 grid grid-cols-1 gap-12 max-w-lg w-full px-8">
+    <div class="backdrop-blur-md bg-white bg-opacity-20 rounded-lg shadow-lg p-8">
+      <h2 class="text-3xl font-bold text-white text-center mb-6">Auction Query Form</h2>
+      <form>
+        <div class="mb-6">
+          <label for="username" class="block text-white font-semibold mb-2">Username</label>
+          <input type="text" id="username" name="username" class="w-full p-3 bg-white bg-opacity-30 rounded-lg border-2 border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300" placeholder="Enter your username" required>
+        </div>
+
+        <div class="mb-6">
+          <label for="email" class="block text-white font-semibold mb-2">Email</label>
+          <input type="email" id="email" name="email" class="w-full p-3 bg-white bg-opacity-30 rounded-lg border-2 border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300" placeholder="Enter your email" required>
+        </div>
+
+        <div class="mb-6">
+          <label for="itemName" class="block text-white font-semibold mb-2">Item Name</label>
+          <input type="text" id="itemName" name="itemName" class="w-full p-3 bg-white bg-opacity-30 rounded-lg border-2 border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300" placeholder="Enter the item name" required>
+        </div>
+
+        <div class="mb-6">
+          <label for="problem" class="block text-white font-semibold mb-2">Problem</label>
+          <textarea id="problem" name="problem" class="w-full p-3 bg-white bg-opacity-30 rounded-lg border-2 border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300" placeholder="Describe the problem" required></textarea>
+        </div>
+
+        <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-600 transition">
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

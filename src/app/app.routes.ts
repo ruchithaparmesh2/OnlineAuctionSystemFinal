@@ -8,6 +8,9 @@ import { AddItemComponent } from './add-item/add-item.component';
 import { AllAuctionsComponent } from './all-auctions/all-auctions.component';
 import { PlaceBidComponent } from './place-bid/place-bid.component';
 import { MyBidsComponent } from './my-bids/my-bids.component';
+import { MyAuctionsComponent } from './my-auctions/my-auctions.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { AuctionFormComponent } from './auction-form/auction-form.component';
 
 export const routes: Routes = [
   { path: '', component: MainpageComponent, pathMatch: 'full' },
@@ -19,5 +22,8 @@ export const routes: Routes = [
   { path: 'add-item', component: AddItemComponent },
   { path: 'place-bid', component: PlaceBidComponent },
   {path:'my-bids',component:MyBidsComponent},
+  {path:'my-auctions',component:MyAuctionsComponent},
+  {path:'notifications',component:NotificationsComponent},
+  {path:'auction-form',component:AuctionFormComponent},
   { path: '**', redirectTo: '' }
 ];

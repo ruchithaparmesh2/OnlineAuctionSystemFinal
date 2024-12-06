@@ -1,33 +1,56 @@
+<app-navbar></app-navbar>
 <div class="p-6">
-    <label for="username" class="block text-lg font-medium text-gray-700">Enter Username</label>
-    <input
-      id="username"
-      type="text"
-      placeholder="enter username without space"
-      [(ngModel)]="username"
-      class="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    />
-    <button
-      (click)="fetchBidDetails()"
-      class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
-    >
-      OK
-    </button>
-  </div>
-  
-  <div class="mt-6" *ngIf="bids.length > 0">
-    <h2 class="text-xl font-semibold text-gray-900 mb-4">All Bids</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div *ngFor="let bid of bids" class="border rounded-lg p-4 shadow-lg">
-        <img
-          [src]=" bid.itemName + '.jpg'"
-          alt="{{ bid.itemName }}"
-          class="w-30 h-30 object-cover rounded-md"
-        />
-        <h3 class="text-lg font-medium text-gray-800 mt-2">{{ bid.itemName }}</h3>
-        <p class="text-sm text-gray-600">Bid Amount: {{ bid.bidAmount }}</p>
-        <p class="text-sm text-gray-600">Bid Time: {{ bid.bidTime }}</p>
-      </div>
+  <label for="username" class="block text-lg font-medium text-gray-700">Enter Username</label>
+  <input
+    id="username"
+    type="text"
+    placeholder="enter username without space"
+    [(ngModel)]="username"
+    class="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+  />
+  <button
+    (click)="fetchBidDetails()"
+    class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+  >
+    OK
+  </button>
+</div>
+
+<div class="mt-6" *ngIf="bids.length > 0">
+  <h2 class="text-xl font-semibold text-gray-900 mb-4">All Bids</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let bid of bids" class="border rounded-lg p-4 shadow-lg">
+      <img
+        [src]="bid.itemName + '.jpg'"
+        alt="{{ bid.itemName }}"
+        class="w-30 h-30 object-cover rounded-md"
+      />
+      <h3 class="text-lg font-medium text-gray-800 mt-2">{{ bid.itemName }}</h3>
+      <p class="text-sm text-gray-600">Bid Amount: {{ bid.bidAmount }}</p>
+      <p class="text-sm text-gray-600">Bid Time: {{ bid.bidTime }}</p>
     </div>
   </div>
-  
+</div>
+
+<div class="mt-6" *ngIf="wonBids.length > 0">
+  <h2 class="text-xl font-semibold text-gray-900 mb-4">Won Bids</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let bid of wonBids" class="border rounded-lg p-4 shadow-lg">
+      <img
+        [src]="bid.itemName + '.jpg'"
+        alt="{{ bid.itemName }}"
+        class="w-30 h-30  rounded-md"
+        loading="lazy"
+      />
+      <h3 class="text-lg font-medium text-gray-800 mt-2">{{ bid.itemName }}</h3>
+      <p class="text-sm text-gray-600">Bid Amount: {{ bid.bidAmount }}</p>
+     
+      <button
+        (click)="goToPayment(bid)"
+        class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+      >
+        Go to Payment
+      </button>
+    </div>
+  </div>
+</div>

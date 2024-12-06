@@ -8,18 +8,37 @@
 
     <!-- Navigation Links -->
     <div class="hidden md:flex space-x-6 text-lg">
-      <a [routerLink]="'/all-auctions'" class="text-gray-300 hover:text-blue-400 transition">All Auctions</a>
-      <a [routerLink]="'/add-item'" class="text-gray-300 hover:text-blue-400 transition">Create Auction</a>
-      <a  [routerLink]="'/my-bids'" class="text-gray-300 hover:text-blue-400 transition">My Bids</a>
+      <a [routerLink]="'/dashboard-user'" 
+         class="text-gray-300 hover:text-blue-400 relative group" 
+         [class.active-link]="activeLink === 'dashboard-user'">
+        <i class="fas fa-home text-xl"></i> 
+      </a>
+      <a [routerLink]="'/all-auctions'" 
+         class="text-gray-300 hover:text-blue-400 relative group" 
+         [class.active-link]="activeLink === 'all-auctions'">All Auctions</a>
+      <a [routerLink]="'/add-item'" 
+         class="text-gray-300 hover:text-blue-400 relative group" 
+         [class.active-link]="activeLink === 'add-item'">Create Auction</a>
+      <a [routerLink]="'/my-bids'" 
+         class="text-gray-300 hover:text-blue-400 relative group" 
+         [class.active-link]="activeLink === 'my-bids'">
+        My Bids
+      </a>
+      <a [routerLink]="'/my-auctions'" 
+         class="text-gray-300 hover:text-blue-400 relative group" 
+         [class.active-link]="activeLink === 'my-auctions'">
+         My Auctions
+      </a>
     </div>
 
     <!-- User Info, Notifications, and Sign Out -->
     <div class="flex items-center space-x-6">
       <!-- Bell Icon with Notification Badge -->
-      <button class="relative">
-        <i class="fas fa-bell text-blue-400 text-2xl"></i>
-        <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">3</span>
-      </button>
+      <a [routerLink]="'/notifications'"  class="relative">
+        
+        <i class="fas fa-bell text-blue-400 text-2xl"   [class.shining]="hasNewNotification"></i>
+ 
+      </a>
 
       <!-- User Details -->
       <div class="flex items-center space-x-3 bg-gray-800 px-4 py-2 rounded-lg shadow-lg">
@@ -37,3 +56,40 @@
     </div>
   </div>
 </div>
+
+<style>
+  .group:hover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0) 100%);
+    animation: shining 1.5s ease-in-out infinite;
+  }
+
+  .active-link {
+    color: #1D4ED8; /* Active color for the link */
+  }
+
+  .active-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0) 100%);
+    animation: shining 1.5s ease-in-out infinite;
+  }
+
+  @keyframes shining {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+</style>
