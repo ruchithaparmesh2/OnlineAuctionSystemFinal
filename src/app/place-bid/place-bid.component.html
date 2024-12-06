@@ -9,7 +9,7 @@
   <ul *ngIf="previousBids.length > 0">
     <li *ngFor="let bid of previousBids" class="mt-1">
       <p class="text-sm">
-        ${{ bid.bidAmount }} by {{ bid.userName }} at {{ bid.bidTime || 'Unknown time' }}
+        ₹{{ bid.bidAmount }} by {{ bid.userName }} at {{ bid.bidTime || 'Unknown time' }}
       </p>
     </li>
   </ul>

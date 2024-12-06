@@ -1,27 +1,30 @@
-
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   <div *ngFor="let auction of auctions" class="bg-white rounded-lg shadow-lg overflow-hidden">
-    <img [src]=" auction.imageUrl" alt="Item image" class="w-60 h-64 object-cover">
+    <img [src]="auction.imageUrl" alt="Item image" class="w-60 h-64 object-cover">
 
     <div class="p-4">
       <h2 class="text-xl font-bold">{{ auction.itemName }}</h2>
       <p class="text-sm text-gray-500">{{ auction.category }}</p>
-      <p class="mt-2 text-lg font-semibold">Starting Price: ${{ auction.startingPrice }}</p>
+      <p class="mt-2 text-lg font-semibold">Starting Price: ₹{{ auction.startingPrice }}</p>
       <p class="mt-2 text-sm text-gray-500">Auction ends in:</p>
       <p class="text-xl text-red-500 font-bold">
         {{ auction.remainingTime || getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime) }}
       </p>
-      
+
       <div *ngIf="getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime) !== 'Item Sold'">
         <input [(ngModel)]="auction.bidAmount" type="number" class="mt-2 p-2 w-full border border-gray-300 rounded" placeholder="Enter your bid">
         <button (click)="onBid(auction.id, auction.bidAmount)" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
           Place Bid
         </button>
       </div>
+      
       <div *ngIf="getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime) === 'Item Sold'">
         <p class="text-xl text-green-500 font-bold">Item Sold</p>
+        <div class="mt-4">
+          <p class="text-sm text-gray-500">Highest Bidder: {{ auction.highestBidUserName }}</p>
+          <p class="text-sm text-gray-500">Bid Amount: ₹{{ auction.highestBidAmount }}</p>
+        </div>
       </div>
-      
     </div>
   </div>
-  </div>
+</div>

@@ -7,6 +7,7 @@ import { DashboardUserComponent } from './dashboard-user/dashboard-user.componen
 import { AddItemComponent } from './add-item/add-item.component';
 import { AllAuctionsComponent } from './all-auctions/all-auctions.component';
 import { PlaceBidComponent } from './place-bid/place-bid.component';
+import { MyBidsComponent } from './my-bids/my-bids.component';
 
 export const routes: Routes = [
   { path: '', component: MainpageComponent, pathMatch: 'full' },
@@ -17,5 +18,6 @@ export const routes: Routes = [
   { path: 'all-auctions', component: AllAuctionsComponent },
   { path: 'add-item', component: AddItemComponent },
   { path: 'place-bid', component: PlaceBidComponent },
+  {path:'my-bids',component:MyBidsComponent},
   { path: '**', redirectTo: '' }
 ];

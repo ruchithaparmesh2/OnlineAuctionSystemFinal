@@ -31,9 +31,12 @@ export class AllAuctionsComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.auctions = data.map(auction => ({
           ...auction,
-          imageUrl: auction.imageUrl, // Include additional fields if needed
-          remainingTime: this.getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime) // Initialize remaining time
+          imageUrl: auction.imageUrl
         }));
+        this.auctions.forEach(auction => {
+          // Fetch highest bid details when the auction time ends
+          this.fetchHighestBid(auction.itemName);
+        });
       }, (error) => {
         console.error('Error fetching auctions:', error);
       });
@@ -59,6 +62,43 @@ export class AllAuctionsComponent implements OnInit, OnDestroy {
         remainingTime: this.getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime)
       }));
     }, 1000);
+  }
+
+  fetchHighestBid(itemName: string): void {
+    this.http.get<any[]>(`http://localhost:8080/api/bids/itemName/${itemName}`)
+      .subscribe((data) => {
+        if (data.length > 0) {
+          const highestBid = data.reduce((prev, current) => (prev.bidAmount > current.bidAmount) ? prev : current);
+          
+          // Send highest bid details to the endpoint
+          this.sendHighestBidToServer(highestBid);
+          
+          // Update auction object with the highest bid details
+          const auction = this.auctions.find(auction => auction.itemName === itemName);
+          if (auction) {
+            auction.highestBidUserName = highestBid.userName || 'No bids yet';
+            auction.highestBidAmount = highestBid.bidAmount;
+          }
+        }
+      }, (error) => {
+        console.error('Error fetching highest bid:', error);
+      });
+  }
+  
+
+  sendHighestBidToServer(highestBid: any): void {
+    const highestBidData = {
+      itemName: highestBid.itemName,
+      userName: highestBid.userName || 'No bids yet',
+      highestBidAmount: highestBid.bidAmount
+    };
+    
+    this.http.post('http://localhost:8080/api/highestBids', highestBidData)
+      .subscribe(() => {
+        console.log('Highest bid sent successfully');
+      }, (error) => {
+        console.error('Error sending highest bid:', error);
+      });
   }
 
   onBid(itemId: string, bidAmount: number): void {
