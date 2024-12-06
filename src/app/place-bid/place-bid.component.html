@@ -1,1 +1,46 @@
-<p>place-bid works!</p>
+<div class="p-4">
+  <h2 class="text-2xl font-bold">
+    {{ auction?.itemName || 'Auction Item Not Available' }}
+  </h2>
+
+  <p *ngIf="previousBids.length > 0; else noBidsMessage" class="text-lg mt-2">
+    Current Bids:
+  </p>
+  <ul *ngIf="previousBids.length > 0">
+    <li *ngFor="let bid of previousBids" class="mt-1">
+      <p class="text-sm">
+        ${{ bid.bidAmount }} by {{ bid.userName }} at {{ bid.bidTime || 'Unknown time' }}
+      </p>
+    </li>
+  </ul>
+
+  <ng-template #noBidsMessage>
+    <p class="text-gray-500 mt-2">No bids have been placed yet.</p>
+  </ng-template>
+
+  <!-- Input for username -->
+  <input
+    [(ngModel)]="userName"
+    type="text"
+    class="mt-4 p-2 w-full border border-gray-300 rounded"
+    placeholder="Enter your username"
+  />
+
+  <!-- Input for bid amount -->
+  <input
+    [(ngModel)]="bidAmount"
+    type="number"
+    class="mt-4 p-2 w-full border border-gray-300 rounded"
+    placeholder="Enter your bid"
+    [min]="auction?.startingPrice || 0"
+  />
+
+  <!-- Submit bid button -->
+  <button
+    (click)="submitBid()"
+    class="mt-4 px-4 py-2 bg-green-500 text-white rounded"
+    [disabled]="!userName || bidAmount <= 0"
+  >
+    Submit Bid
+  </button>
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -14,7 +15,7 @@ export class AllAuctionsComponent implements OnInit, OnDestroy {
   auctions: any[] = [];
   timerInterval: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchAuctions();
@@ -30,7 +31,8 @@ export class AllAuctionsComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.auctions = data.map(auction => ({
           ...auction,
-          imageUrl: auction.imageUrl
+          imageUrl: auction.imageUrl, // Include additional fields if needed
+          remainingTime: this.getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime) // Initialize remaining time
         }));
       }, (error) => {
         console.error('Error fetching auctions:', error);
@@ -60,6 +62,9 @@ export class AllAuctionsComponent implements OnInit, OnDestroy {
   }
 
   onBid(itemId: string, bidAmount: number): void {
-    console.log('Bid submitted for item:', itemId, 'with amount:', bidAmount);
+    const selectedAuction = this.auctions.find(auction => auction.id === itemId);
+    if (selectedAuction) {
+      this.router.navigate(['/place-bid'], { state: { auction: selectedAuction } });
+    }
   }
 }
