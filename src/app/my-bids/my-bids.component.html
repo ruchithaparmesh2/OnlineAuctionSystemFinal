@@ -1,56 +1,95 @@
 <app-navbar></app-navbar>
-<div class="p-6">
-  <label for="username" class="block text-lg font-medium text-gray-700">Enter Username</label>
-  <input
-    id="username"
-    type="text"
-    placeholder="enter username without space"
-    [(ngModel)]="username"
-    class="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-  />
-  <button
-    (click)="fetchBidDetails()"
-    class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
-  >
-    OK
-  </button>
-</div>
 
-<div class="mt-6" *ngIf="bids.length > 0">
-  <h2 class="text-xl font-semibold text-gray-900 mb-4">All Bids</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let bid of bids" class="border rounded-lg p-4 shadow-lg">
-      <img
-        [src]="bid.itemName + '.jpg'"
-        alt="{{ bid.itemName }}"
-        class="w-30 h-30 object-cover rounded-md"
-      />
-      <h3 class="text-lg font-medium text-gray-800 mt-2">{{ bid.itemName }}</h3>
-      <p class="text-sm text-gray-600">Bid Amount: {{ bid.bidAmount }}</p>
-      <p class="text-sm text-gray-600">Bid Time: {{ bid.bidTime }}</p>
+<!-- Main Container with Background Image -->
+<div
+  class="min-h-screen bg-cover bg-center relative"
+  style="background-image: url('https://wallpapercave.com/wp/wp9863784.jpg'); background-size: cover; background-repeat: no-repeat;"
+>
+  <!-- Overlay for Dim Effect -->
+  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+  <!-- Content Container -->
+  <div class="relative z-10 p-8">
+    <!-- Welcome Section -->
+    <div
+      class="p-6 rounded-xl shadow-lg text-white text-center bg-white bg-opacity-10 backdrop-blur-lg"
+    >
+      <h1 class="text-4xl font-extrabold">Welcome Back, {{ username }}!</h1>
     </div>
-  </div>
-</div>
 
-<div class="mt-6" *ngIf="wonBids.length > 0">
-  <h2 class="text-xl font-semibold text-gray-900 mb-4">Won Bids</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let bid of wonBids" class="border rounded-lg p-4 shadow-lg">
-      <img
-        [src]="bid.itemName + '.jpg'"
-        alt="{{ bid.itemName }}"
-        class="w-30 h-30  rounded-md"
-        loading="lazy"
-      />
-      <h3 class="text-lg font-medium text-gray-800 mt-2">{{ bid.itemName }}</h3>
-      <p class="text-sm text-gray-600">Bid Amount: {{ bid.bidAmount }}</p>
-     
-      <button
-        (click)="goToPayment(bid)"
-        class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
-      >
-        Go to Payment
-      </button>
+    <div class="mt-12" *ngIf="finalWonBids.length > 0">
+      <h2 class="text-3xl font-semibold text-white mb-6">Final Won Bids</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div *ngFor="let bid of finalWonBids" class="border rounded-lg bg-white bg-opacity-10 backdrop-blur-lg shadow-lg hover:shadow-xl hover:scale-105 transition transform duration-300 ease-in-out">
+          
+          <div class="relative flex items-center justify-center mt-4">
+            <img
+              [src]="bid.itemName + '.jpg'"
+              alt="{{ bid.itemName }}"
+              class="w-32 h-32 object-cover rounded-lg border-2 border-gray-300 shadow-md"
+              loading="lazy"
+              (error)="handleImageError($event)"
+            />
+          </div>
+    
+          <div class="p-6 text-white text-center">
+            <h3 class="text-lg font-semibold truncate">{{ bid.itemName }}</h3>
+            <p class="mt-1 text-gray-300 text-sm">
+              Bid Amount: <span class="font-bold text-teal-400">{{ bid.bidAmount | currency }}</span>
+            </p>
+            <p class="mt-1 text-gray-300 text-sm">
+              Auction End Date: {{ bid.auctionEndDate }}
+            </p>
+            <p class="mt-1 text-gray-300 text-sm">
+              Auction End Time: {{ bid.auctionEndTime }}
+            </p>
+    
+            <!-- Conditional Button or Message -->
+            <ng-container *ngIf="bid.payment === 'no'; else paymentDone">
+              <button 
+                (click)="goToPayment(bid)" 
+                class="mt-4 bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-2 rounded-md hover:from-green-500 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-400">
+                Go to Payment
+              </button>
+            </ng-container>
+            
+            <ng-template #paymentDone>
+              <p class="mt-4 text-green-500 font-bold">Payment done, it's yours!</p>
+            </ng-template>
+    
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Active Bids Section -->
+    <div class="mt-12" *ngIf="bids.length > 0">
+      <h2 class="text-3xl font-semibold text-white mb-6">Your Active Bids</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div
+          *ngFor="let bid of bids"
+          class="border rounded-lg bg-white bg-opacity-10 backdrop-blur-lg shadow-lg hover:shadow-xl hover:scale-105 transition transform duration-300 ease-in-out"
+        >
+          <!-- Square Image with Fallback -->
+          <div class="relative flex items-center justify-center mt-4">
+            <img
+              [src]="bid.itemName + '.jpg'"
+              alt="{{ bid.itemName }}"
+              class="w-32 h-32 rounded-lg object-cover border-4 border-white shadow-md"
+              loading="lazy"
+              (error)="handleImageError($event)"
+            />
+          </div>
+          <div class="p-6 text-white text-center">
+            <h3 class="text-lg font-semibold truncate">{{ bid.itemName }}</h3>
+            <p class="mt-1 text-gray-300 text-sm">
+              Bid Amount: <span class="font-bold text-teal-400">{{ bid.bidAmount | currency }}</span>
+            </p>
+            <p class="mt-1 text-gray-300 text-sm">Bid Time: {{ bid.bidTime }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

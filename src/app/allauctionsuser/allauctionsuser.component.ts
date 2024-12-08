@@ -3,16 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NavbarComponent } from '../navbar/navbar.component';
+
+import { NavbarAdminComponent } from '../navbar-admin/navbar-admin.component';
 
 @Component({
-  selector: 'app-all-auctions',
+  selector: 'app-allauctionsuser',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent],
-  templateUrl: './all-auctions.component.html',
-  styleUrls: ['./all-auctions.component.css']
+  imports: [CommonModule, FormsModule,NavbarAdminComponent],
+  templateUrl: './allauctionsuser.component.html',
+  styleUrl: './allauctionsuser.component.css'
 })
-export class AllAuctionsComponent implements OnInit, OnDestroy {
+export class AllauctionsuserComponent implements OnInit, OnDestroy {
   auctions: any[] = [];
   timerInterval: any;
 
@@ -79,41 +80,31 @@ export class AllAuctionsComponent implements OnInit, OnDestroy {
           // Send highest bid details to the endpoint
           this.sendHighestBidToServer(highestBid);
           
-          // Update auction object with the highest bid details, but keep the existing payment status
+          // Update auction object with the highest bid details
           const auction = this.auctions.find(auction => auction.itemName === itemName);
           if (auction) {
             auction.highestBidUserName = highestBid.userName || 'No bids yet';
             auction.highestBidAmount = highestBid.bidAmount;
-
-            // Keep the existing payment status or set it to 'no' if no payment status exists
-            auction.payment = auction.payment || 'no'; 
           }
         }
       }, (error) => {
         console.error('Error fetching highest bid:', error);
       });
   }
+  
 
   sendHighestBidToServer(highestBid: any): void {
-    this.http.get<any>(`http://localhost:8080/api/highestBids/itemName/${highestBid.itemName}`)
-      .subscribe((existingBid) => {
-        const paymentStatus = existingBid?.payment === 'yes' ? 'yes' : 'no';
-  
-        const highestBidData = {
-          itemName: highestBid.itemName,
-          userName: highestBid.userName || 'No bids yet',
-          highestBidAmount: highestBid.bidAmount,
-          payment: paymentStatus
-        };
-  
-        this.http.post('http://localhost:8080/api/highestBids', highestBidData)
-          .subscribe(() => {
-            console.log('Highest bid sent successfully');
-          }, (error) => {
-            console.error('Error sending highest bid:', error);
-          });
+    const highestBidData = {
+      itemName: highestBid.itemName,
+      userName: highestBid.userName || 'No bids yet',
+      highestBidAmount: highestBid.bidAmount
+    };
+    
+    this.http.post('http://localhost:8080/api/highestBids', highestBidData)
+      .subscribe(() => {
+        console.log('Highest bid sent successfully');
       }, (error) => {
-        console.error('Error fetching existing bid:', error);
+        console.error('Error sending highest bid:', error);
       });
   }
 
@@ -123,4 +114,5 @@ export class AllAuctionsComponent implements OnInit, OnDestroy {
       this.router.navigate(['/place-bid'], { state: { auction: selectedAuction } });
     }
   }
+
 }

@@ -1,23 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../user.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-bids',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule,NavbarComponent],
+  imports: [FormsModule, CommonModule, RouterModule, NavbarComponent],
   templateUrl: './my-bids.component.html',
-  styleUrl: './my-bids.component.css',
+  styleUrls: ['./my-bids.component.css'],
 })
-export class MyBidsComponent {
+export class MyBidsComponent implements OnInit {
   username: string = '';
   bids: any[] = [];
   wonBids: any[] = [];
+  finalWonBids: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService,private router: Router) {}
+
+  ngOnInit(): void {
+    this.userService.fetchUserData().subscribe((user) => {
+      if (user && user.name) {
+        this.username = user.name.replace(/\s+/g, '');
+        this.fetchBidDetails();
+      } else {
+        console.error('No user data found.');
+      }
+    });
+  }
 
   fetchBidDetails() {
     if (!this.username.trim()) {
@@ -25,14 +39,21 @@ export class MyBidsComponent {
       return;
     }
 
-    // Fetch all bids
     const allBidsUrl = `http://localhost:8080/api/bids/name/${this.username}`;
     this.http.get<any[]>(allBidsUrl).subscribe(
       (response) => {
         if (response && response.length > 0) {
           this.bids = response.map((bid) => ({
             itemName: bid.itemName,
-            bidAmount: bid.bidAmount,  // Only include bidAmount
+            bidAmount: bid.bidAmount,
+            bidTime: new Date(bid.bidTime).toLocaleString('en-US', {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: true,
+              day: '2-digit',
+              month: 'short',
+              year: 'numeric',
+            }),
           }));
         } else {
           this.bids = [];
@@ -45,15 +66,15 @@ export class MyBidsComponent {
       }
     );
 
-    // Fetch won bids
     const wonBidsUrl = `http://localhost:8080/api/highestBids/name/${this.username}`;
     this.http.get<any[]>(wonBidsUrl).subscribe(
       (response) => {
         if (response && response.length > 0) {
           this.wonBids = response.map((bid) => ({
             itemName: bid.itemName,
-            bidAmount: bid.highestBidAmount,  // Only include bidAmount
+            bidAmount: bid.highestBidAmount,
           }));
+          this.checkAuctionEndDates();
         } else {
           this.wonBids = [];
           alert('No won bids found for this username.');
@@ -66,13 +87,54 @@ export class MyBidsComponent {
     );
   }
 
-  goToPayment(bid: any) {
-    // Navigate to payment page with the bid information
-    console.log('Going to payment for:', bid);
-    // You can add your routing logic here, e.g., this.router.navigate(['/payment', bid.id]);
+  checkAuctionEndDates() {
+    const now = new Date();
+    this.finalWonBids = [];
+  
+    this.wonBids.forEach((bid) => {
+      const auctionUrl = `http://localhost:8080/api/auctions/itemName/${bid.itemName}`;
+      this.http.get<any>(auctionUrl).subscribe(
+        (auction) => {
+          if (auction && auction.auctionEndDate && auction.auctionEndTime) {
+            const endDateTime = new Date(`${auction.auctionEndDate}T${auction.auctionEndTime}`);
+            if (endDateTime <= now) {
+              const highestBidUrl = `http://localhost:8080/api/highestBids/itemName/${bid.itemName}`;
+              this.http.get<any>(highestBidUrl).subscribe(
+                (highestBid) => {
+                  if (highestBid) {
+                    this.finalWonBids.push({
+                      ...bid,
+                      auctionEndDate: auction.auctionEndDate,
+                      auctionEndTime: auction.auctionEndTime,
+                      payment: highestBid.payment // Include payment field from highestBid
+                    });
+                  }
+                },
+                (error) => {
+                  console.error(`Error fetching highest bid for ${bid.itemName}:`, error);
+                }
+              );
+            }
+          }
+        },
+        (error) => {
+          console.error(`Error fetching auction details for ${bid.itemName}:`, error);
+        }
+      );
+    });
   }
+  
+  goToPayment(bid: any) {
+    this.router.navigate(['/payment'], {
+      queryParams: {
+        itemName: bid.itemName,
+        username: this.username,
+        bidAmount: bid.bidAmount,
+      },
+    });
+  }
+
   handleImageError(event: Event) {
     (event.target as HTMLImageElement).src = 'default-image.jpg';
   }
-  
 }

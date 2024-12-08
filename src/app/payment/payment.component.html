@@ -1,0 +1,32 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+      
+      <!-- Welcome Column -->
+      <div class="bg-green-500 text-white rounded-lg p-6 flex flex-col justify-center">
+        <h1 class="text-3xl font-bold mb-2">Welcome to Payment Page</h1>
+        <p class="text-lg">Securely process your payment and confirm your bid!</p>
+      </div>
+  
+      <!-- Payment Details -->
+      <div class="p-6 flex flex-col justify-center">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Payment Details</h2>
+        <p class="text-lg mb-2"><strong>Item Name:</strong> {{ itemName }}</p>
+        <p class="text-lg mb-2"><strong>Your Username:</strong> {{ username }}</p>
+        <p class="text-lg mb-2"><strong>Bid Amount:</strong> ₹{{ bidAmount }}</p>
+        <p class="text-lg mb-4"><strong>Owner Name:</strong> {{ ownerName }}</p>
+  
+        <button (click)="doPayment()" 
+                class="bg-blue-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200">
+          Do Payment
+        </button>
+  
+        <!-- Success Message -->
+        <div *ngIf="paymentSuccess" class="mt-4 text-center text-green-500">
+          <h3 class="text-2xl font-bold">Congratulations!</h3>
+          <p class="text-lg">Hurrah! You won the auction!</p>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  

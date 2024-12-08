@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="flex items-center justify-center min-h-screen bg-cover bg-center relative"
-  style="background-image: url('https://wallpapercave.com/wp/wp9863784.jpg');">
+  style="background-image: url('https://wallpapercave.com/wp/wp9863784.jpg'); margin-top: -2rem;">
 
   <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
 
@@ -15,13 +15,7 @@
 
       <!-- Left Column -->
       <div class="space-y-4">
-        <div>
-          <label for="userName" class="block text-white text-sm font-medium">User Name</label>
-          <input type="text" id="userName"
-            [(ngModel)]="auction.userName" name="userName"
-            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
-            placeholder="Enter user name without space" required>
-        </div>
+        <!-- Removed username field -->
         <div>
           <label for="category" class="block text-white text-sm font-medium">Category</label>
           <select id="category" [(ngModel)]="auction.category" name="category"
@@ -40,6 +34,11 @@
           <input type="text" id="itemName" [(ngModel)]="auction.itemName" name="itemName"
             class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
             placeholder="Enter item name" required>
+        </div>
+        <div>
+          <label for="fileInput" class="block text-white text-sm font-medium">Upload Item Image</label>
+          <input type="file" id="fileInput" (change)="onFileChange($event)"
+            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400">
         </div>
       </div>
 
@@ -79,16 +78,11 @@
             class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
             required>
         </div>
-        <div>
-          <label for="fileInput" class="block text-white text-sm font-medium">Upload Item Image</label>
-          <input type="file" id="fileInput" (change)="onFileChange($event)"
-            class="w-full p-2 mt-1 text-gray-800 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400">
-        </div>
+        
       </div>
     </div>
 
     <div class="mt-6 text-center">
-      <!-- Add #auctionForm="ngForm" to reference the form for resetting -->
       <form #auctionForm="ngForm" (ngSubmit)="onSubmit(auctionForm)">
         <button type="submit"
           class="w-full md:w-auto px-4 py-2 bg-gradient-to-r from-indigo-500 to-blue-500 text-white text-sm font-semibold rounded-lg hover:from-indigo-600 hover:to-blue-600 transition duration-300">

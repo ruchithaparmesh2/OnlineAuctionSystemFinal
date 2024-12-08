@@ -1,0 +1,47 @@
+<app-navbar-admin></app-navbar-admin>
+<div class="auction-insights-container">
+    <h1 class="title">Auction Insights</h1>
+  
+    <!-- Total Auctions Insight -->
+    <div class="insight-card">
+      <h3>Total Auctions by User</h3>
+      <p class="value">{{ totalAuctions }} Auctions</p>
+      <div class="progress-bar">
+        <div [style.width]="totalAuctionsPercent + '%'" class="progress"></div>
+      </div>
+    </div>
+  
+    <!-- Average Starting Price Insight -->
+    <div class="insight-card">
+      <h3>Average Starting Price</h3>
+      <p class="value">₹{{ avgPrice.toFixed(2) }}</p>
+      <div class="progress-bar">
+        <div [style.width]="avgPricePercent + '%'" class="progress"></div>
+      </div>
+    </div>
+  
+    <!-- Category Insights -->
+    <div class="insight-card">
+      <h3>Category Distribution</h3>
+      <div *ngFor="let category of categoryData" class="category-row">
+        <p class="category-name">{{ category.name }}</p>
+        <div class="progress-bar">
+          <div [style.width]="category.percent + '%'" class="progress"></div>
+        </div>
+        <p class="percent">{{ category.percent.toFixed(2) }}%</p>
+      </div>
+    </div>
+  
+    <!-- Timeline Insights -->
+    <div class="insight-card">
+      <h3>Daily Auction Activity</h3>
+      <div *ngFor="let timeline of timelineData" class="timeline-row">
+        <p class="timeline-date">{{ timeline.date }}</p>
+        <div class="progress-bar">
+          <div [style.width]="timeline.percent + '%'" class="progress"></div>
+        </div>
+        <p class="percent">{{ timeline.percent.toFixed(2) }}%</p>
+      </div>
+    </div>
+  </div>
+  

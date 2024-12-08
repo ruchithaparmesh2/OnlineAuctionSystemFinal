@@ -3,16 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarAdminComponent } from '../navbar-admin/navbar-admin.component';
+
 
 @Component({
   selector: 'app-all-auctions',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent],
-  templateUrl: './all-auctions.component.html',
-  styleUrls: ['./all-auctions.component.css']
+  imports: [CommonModule, FormsModule, NavbarAdminComponent],
+  templateUrl: './manage-auctions.component.html',
+  styleUrls: ['./manage-auctions.component.css']
 })
-export class AllAuctionsComponent implements OnInit, OnDestroy {
+export class ManageAuctionsComponent implements OnInit, OnDestroy {
   auctions: any[] = [];
   timerInterval: any;
 
@@ -123,4 +124,16 @@ export class AllAuctionsComponent implements OnInit, OnDestroy {
       this.router.navigate(['/place-bid'], { state: { auction: selectedAuction } });
     }
   }
+  deleteAuction(itemName: string): void {
+    this.http.delete(`http://localhost:8080/api/auctions/deleteItem/${itemName}`)
+      .subscribe(() => {
+        // Remove the deleted auction from the local list
+        this.auctions = this.auctions.filter(auction => auction.itemName !== itemName);
+        console.log('Auction deleted successfully');
+      }, (error) => {
+        console.error('Error deleting auction:', error);
+      });
+  }
+  
+  
 }

@@ -1,56 +1,23 @@
+<app-navbar-admin></app-navbar-admin>
 <div class="bg-cover bg-center relative min-h-screen" style="background-image: url('https://wallpapercave.com/wp/wp9863784.jpg');">
     <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-60"></div>
     
-    <div class="bg-gray-900 text-white shadow-md relative z-10">
-      <div class="flex items-center justify-between px-6 py-4">
-        <!-- Logo and Title -->
-        <div class="flex items-center space-x-2">
-          <img src="https://cdn2.iconfinder.com/data/icons/nft-soft-fill/60/Auction-Bidding-bid-bidder-hand-1024.png" alt="BidBuddy Logo" class="w-8 h-8">
-          <span class="font-semibold text-xl">Bidding-Buddy</span>
-          <span class="font-semibold text-xl pl-8" >[Admin Account]</span>
-        </div>
   
-       
-        <!-- User Info, Notifications, and Sign Out -->
-        <div class="flex items-center space-x-6">
-          <!-- Bell Icon with Notification Badge -->
-          <button class="relative">
-            <i class="fas fa-bell text-blue-500 text-xl"></i>
-            <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">3</span>
-          </button>
-  
-          <!-- User Details -->
-          <div class="flex items-center space-x-2 bg-gray-800 backdrop-blur-md bg-opacity-30 px-4 py-2 rounded-lg shadow-lg transform transition hover:scale-105 hover:shadow-2xl">
-            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User Profile" class="w-10 h-10 rounded-full border-2 border-blue-500">
-            <div>
-              <p class="font-semibold">{{ user?.name }}</p>
-              <p class="text-sm text-gray-400">{{ user?.email }}</p>
-            </div>
-          </div>
-  
-          <a href="/" class="bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-lg text-white hover:bg-gradient-to-l transition">
-            Sign Out
-          </a>
-          
-          
-        </div>
-      </div>
-    </div>
 
     <!-- Admin Dashboard Cards Section -->
     <div class="container mx-auto px-8 py-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Latest Auctions Card -->
         <div class="bg-gray-800 backdrop-blur-md bg-opacity-40 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105">
-          <h2 class="text-xl font-bold">Latest Auctions</h2>
-          <p class="mt-4">View the most recent auctions and start bidding.</p>
+          <h2 class="text-xl font-bold">All Auctions</h2>
+          <p class="mt-4">Explore the Ongoing Auctions</p>
           <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">View More</button>
         </div>
 
         <!-- Pending Approvals Card -->
         <div class="bg-gray-800 backdrop-blur-md bg-opacity-40 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105">
-          <h2 class="text-xl font-bold">Pending Approvals</h2>
-          <p class="mt-4">Approve pending auction listings and bids.</p>
+          <h2 class="text-xl font-bold">Manage Auctions</h2>
+          <p class="mt-4">Delete the Unwanted Auctions</p>
           <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">Approve Now</button>
         </div>
 
@@ -70,8 +37,8 @@
 
         <!-- Create New Auction Card -->
         <div class="bg-gray-800 backdrop-blur-md bg-opacity-40 text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105">
-          <h2 class="text-xl font-bold">Create New Auction</h2>
-          <p class="mt-4">Start a new auction by listing your items here.</p>
+          <h2 class="text-xl font-bold">User Queries</h2>
+          <p class="mt-4">View the User queries and address them </p>
           <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">Create Auction</button>
         </div>
 

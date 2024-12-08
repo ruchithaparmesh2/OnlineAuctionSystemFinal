@@ -1,0 +1,85 @@
+<app-navbar-admin></app-navbar-admin>
+
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4"
+  style="background-image: url('https://wallpapercave.com/wp/wp9863784.jpg'); background-size: cover; background-position: center;"
+>
+  <div
+    *ngFor="let auction of auctions"
+    class="backdrop-blur-lg bg-black bg-opacity-50 border border-gray-700 rounded-xl shadow-lg overflow-hidden transition-transform hover:scale-105 hover:bg-opacity-60"
+  >
+    <!-- Auction Item Image -->
+    <div class="flex justify-center mt-4">
+      <img
+        [src]="auction.imageUrl"
+        alt="Item image"
+        class="w-32 h-32 object-cover rounded-lg border-2 border-gray-600 shadow-md"
+      />
+    </div>
+
+    <div class="p-6 text-center">
+      <!-- Auction Item Name and Category -->
+      <div class="mb-4">
+        <h2 class="text-lg font-bold text-white">{{ auction.itemName }}</h2>
+        <p class="text-sm text-gray-400 uppercase tracking-wider">
+          {{ auction.category }}
+        </p>
+      </div>
+
+      <!-- Starting Price -->
+      <p class="text-base text-gray-300">
+        Starting Price:
+        <span class="text-lg font-bold text-green-400">₹{{ auction.startingPrice }}</span>
+      </p>
+
+      <!-- Auction Timer -->
+      <p class="mt-4 text-sm text-gray-400">Auction ends in:</p>
+      <p class="text-lg text-red-400 font-semibold">
+        {{ auction.remainingTime || getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime) }}
+      </p>
+
+      <!-- Place Bid Button (Only for active auctions) -->
+      <div
+        *ngIf="getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime) !== 'Item Sold'"
+        class="mt-6"
+      >
+        <button
+          (click)="onBid(auction.id, auction.bidAmount)"
+          class="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-teal-500 text-white font-medium rounded-lg shadow-md hover:from-blue-600 hover:to-teal-600"
+        >
+         Ongoing Bid
+        </button>
+      </div>
+
+      <!-- Item Sold Section -->
+      <div
+        *ngIf="getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime) === 'Item Sold'"
+        class="mt-6 p-4 bg-red-500 bg-opacity-50 text-red-200 rounded-lg shadow-md"
+      >
+        <p class="text-base font-semibold">Item Sold</p>
+        <div class="mt-2 text-sm">
+          <p>Highest Bidder: <span class="font-bold">{{ auction.highestBidUserName }}</span></p>
+          <p>Bid Amount: <span class="font-bold">₹{{ auction.highestBidAmount }}</span></p>
+        </div>
+      </div>
+
+      <!-- Delete Auction Button -->
+      <div class="mt-4">
+        <button
+          (click)="deleteAuction(auction.itemName)"
+          class="w-full px-4 py-2 bg-red-600 text-white font-medium rounded-lg shadow-md hover:bg-red-700"
+        >
+          <i class="fa fa-trash"></i> Delete Auction
+        </button>
+      </div>
+
+      <!-- Call to Action -->
+      <div
+        *ngIf="getRemainingTime(auction.auctionEndDate + 'T' + auction.auctionEndTime) !== 'Item Sold'"
+        class="mt-6 bg-gray-800 bg-opacity-40 text-gray-400 p-4 rounded-lg"
+      >
+        <p class="text-sm">Admin Mode</p>
+      </div>
+    </div>
+  </div>
+</div>

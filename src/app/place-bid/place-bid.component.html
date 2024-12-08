@@ -1,66 +1,52 @@
 <app-navbar></app-navbar>
 <div class="relative min-h-screen bg-cover bg-center" style="background-image: url('https://wallpapercave.com/wp/wp9863784.jpg'); background-size: cover;">
-<div class="p-6 backdrop-blur-md bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 bg-opacity-80 rounded-lg shadow-lg w-full max-w-md mx-auto">
-  <!-- Auction Title -->
-  <h2 class="text-2xl font-extrabold text-white text-center">
-    {{ auction?.itemName || 'Auction Item Not Available' }}
-  </h2>
+  <div class="p-6 backdrop-blur-md bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 bg-opacity-80 rounded-lg shadow-lg w-full max-w-md mx-auto">
+    <!-- Auction Title -->
+    <h2 class="text-2xl font-extrabold text-white text-center">
+      {{ auction?.itemName || 'Auction Item Not Available' }}
+    </h2>
 
-  <!-- Current Bids Section -->
-  <div class="mt-4">
-    <p *ngIf="previousBids.length > 0; else noBidsMessage" class="text-lg text-gray-200">
-      Current Bids:
-    </p>
-    <ul *ngIf="previousBids.length > 0" class="mt-2 space-y-2">
-      <li *ngFor="let bid of previousBids" class="p-3 bg-gray-700 rounded-lg shadow-md">
-        <p class="text-sm text-gray-300">
-          <span class="font-semibold text-green-400">₹{{ bid.bidAmount }}</span> by 
-          <span class="font-semibold">{{ bid.userName }}</span> at 
-          <span class="text-gray-400">{{ bid.bidTime || 'Unknown time' }}</span>
-        </p>
-      </li>
-    </ul>
-    <ng-template #noBidsMessage>
-      <p class="text-gray-400 mt-2">No bids have been placed yet.</p>
-    </ng-template>
+    <!-- Current Bids Section -->
+    <div class="mt-4">
+      <p *ngIf="previousBids.length > 0; else noBidsMessage" class="text-lg text-gray-200">
+        Current Bids:
+      </p>
+      <ul *ngIf="previousBids.length > 0" class="mt-2 space-y-2">
+        <li *ngFor="let bid of previousBids" class="p-3 bg-gray-700 rounded-lg shadow-md">
+          <p class="text-sm text-gray-300">
+            <span class="font-semibold text-green-400">₹{{ bid.bidAmount }}</span> by 
+            <span class="font-semibold">{{ bid.userName }}</span> at 
+            <span class="text-gray-400">{{ bid.bidTime || 'Unknown time' }}</span>
+          </p>
+        </li>
+      </ul>
+      <ng-template #noBidsMessage>
+        <p class="text-gray-400 mt-2">No bids have been placed yet.</p>
+      </ng-template>
+    </div>
+
+    <!-- Input for Bid Amount -->
+    <div class="mt-4">
+      <label for="bidAmount" class="block text-gray-200 text-sm font-semibold mb-2">
+        Bid Amount
+      </label>
+      <input
+        [(ngModel)]="bidAmount"
+        id="bidAmount"
+        type="number"
+        class="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Enter your bid"
+        [min]="auction?.startingPrice || 0"
+      />
+    </div>
+
+    <!-- Submit Bid Button -->
+    <button
+      (click)="submitBid()"
+      class="mt-6 w-full px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50"
+      [disabled]="!userName || bidAmount <= 0"
+    >
+      Submit Bid
+    </button>
   </div>
-
-  <!-- Input for Username -->
-  <div class="mt-6">
-    <label for="username" class="block text-gray-200 text-sm font-semibold mb-2">
-      Username
-    </label>
-    <input
-      [(ngModel)]="userName"
-      id="username"
-      type="text"
-      class="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      placeholder="Enter your username"
-    />
-  </div>
-
-  <!-- Input for Bid Amount -->
-  <div class="mt-4">
-    <label for="bidAmount" class="block text-gray-200 text-sm font-semibold mb-2">
-      Bid Amount
-    </label>
-    <input
-      [(ngModel)]="bidAmount"
-      id="bidAmount"
-      type="number"
-      class="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      placeholder="Enter your bid"
-      [min]="auction?.startingPrice || 0"
-    />
-  </div>
-
-  <!-- Submit Bid Button -->
-  <button
-    (click)="submitBid()"
-    class="mt-6 w-full px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50"
-    [disabled]="!userName || bidAmount <= 0"
-  >
-    Submit Bid
-  </button>
-</div>
 </div>

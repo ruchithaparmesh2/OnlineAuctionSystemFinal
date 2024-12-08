@@ -11,6 +11,11 @@ import { MyBidsComponent } from './my-bids/my-bids.component';
 import { MyAuctionsComponent } from './my-auctions/my-auctions.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { AuctionFormComponent } from './auction-form/auction-form.component';
+import { PaymentComponent } from './payment/payment.component';
+import { AllauctionsuserComponent } from './allauctionsuser/allauctionsuser.component';
+import { ActiveUsersComponent } from './active-users/active-users.component';
+import { ManageAuctionsComponent } from './manage-auctions/manage-auctions.component';
+import { AuctionInsightsComponent } from './auction-insights/auction-insights.component';
 
 export const routes: Routes = [
   { path: '', component: MainpageComponent, pathMatch: 'full' },
@@ -25,5 +30,10 @@ export const routes: Routes = [
   {path:'my-auctions',component:MyAuctionsComponent},
   {path:'notifications',component:NotificationsComponent},
   {path:'auction-form',component:AuctionFormComponent},
+  {path:'payment',component:PaymentComponent},
+  {path:'allauctionsuser',component:AllauctionsuserComponent},
+  {path:'active-users',component:ActiveUsersComponent},
+  {path:'manage-auctions',component:ManageAuctionsComponent},
+  {path:'auction-insights',component:AuctionInsightsComponent},
   { path: '**', redirectTo: '' }
 ];
